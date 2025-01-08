@@ -1,101 +1,166 @@
+"use client"
+
+import Marquee from "@/components/Marquee";
+import ProductCard from "@/components/ProductCard";
+import ProductCardWithoutMark from "@/components/ProductCardWithoutMark";
+import ReviewCard from "@/components/ReviewCard";
+import { Button } from "@/components/ui/button";
+import { highligh } from "@/lib/utils";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { useEffect } from "react";
 
+
+const products = [
+  {name: "hello"},
+  {name: "hello"},
+  {name: "hello"},
+  {name: "hello"},
+]
+
+const productslimited = [
+  {name: "PREFORMENCE SERIES"},
+  {name: "LIMITED EDITION"},
+  {name: "KIDS COLLECTION"},
+]
+
+gsap.registerPlugin(ScrollTrigger)
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const containers = gsap.utils.toArray(".image-container") as HTMLElement[]
+      containers.forEach((container) => {
+        let image = container.querySelector(".img");
+      
+        let tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: container,
+              scrub: true,
+              pin: false
+            },
+          }); 
+          tl.from(image, {
+            yPercent: -40,
+            ease: "none",
+          }).to(image, {
+            yPercent: 40,
+            ease: "none",
+          }); 
+      });
+    })
+    return () => ctx.revert()
+  })
+
+  return (
+    <main className="">
+      <div>
+        <div className="h-[100vh] relative image-container overflow-hidden">
+          <Image src="/hero-cover.jpg" alt="cover" fill className="object-cover h-full w-full -z-30 img" />
+          <div className="px-10 pt-10">
+            <h1 className="text-[4.5rem] font-bold">Step-up Your Stride</h1>
+            <p className="text-[1.5rem] mt-16">Premium Athletic Footwear</p>
+            <Button className="bg-black mt-3 text-yellow-500 hover:bg-white hover:text-black border-2 border-black">Shop now</Button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="backdrop-blur-md bg-white/50 rounded-md w-[500px] h-[300px] text-center absolute bottom-1 right-14 p-3">
+          <div className="bg-white rounded-md relative w-full h-full flex justify-between gap-x-10">
+              <div className="relative h-full w-full">
+                <Image src="/p1.jpg" alt="shose" fill className="object-cover w-full h-full" />
+              </div>
+              <div className="pr-5 pt-5 text-left">
+                <h3 className="font-bold">MARATHON MASTER</h3>
+                <p className="h-[150px]">$140.00</p>
+                <Button className="hover:bg-black hover:text-yellow-500">Add to card</Button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white container py-20">
+        <div className="flex justify-between items-center pb-10">
+          <h3 className="uppercase">BEst seller</h3>
+          <Button>view all</Button>
+        </div>
+        <div className="grid grid-cols-4 gap-7">
+          {
+            products.map((items, i) => (
+              <ProductCard key={i} name={items.name}/>
+            ))
+          }
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="h-[100vh] relative image-container overflow-hidden">
+          <Image src="/cover2.jpg" alt="cover" fill className="object-cover h-full w-full -z-30 img" />
+          <div className="px-10 pt-10">
+            <h1 className="text-[4.5rem] font-bold">20% Off Kids Styles</h1>
+            <p className="text-[1.5rem] mt-16">Exclusive, one-time offer</p>
+            <Button className="bg-black mt-3 text-yellow-500 hover:bg-white hover:text-black border-2 border-black">Shop now</Button>
+          </div>
+        </div>
+        <div className="backdrop-blur-md bg-white/50 rounded-md w-[500px] h-[300px] text-center absolute bottom-1 right-14 p-3">
+          <div className="bg-white rounded-md relative w-full h-full flex justify-between gap-x-10">
+              <div className="relative h-full w-full">
+                <Image src="/p1.jpg" alt="shose" fill className="object-cover w-full h-full" />
+              </div>
+              <div className="pr-5 pt-5 text-left">
+                <h3 className="font-bold">MARATHON MASTER</h3>
+                <p className="h-[150px]">$140.00</p>
+                <Button className="hover:bg-black hover:text-yellow-500">Add to card</Button>
+              </div>
+          </div>
+        </div>
+      </div>
+      
+      <Marquee words={highligh} className="text-white text-[1.5rem]" icon/>
+      <div className="bg-white container py-20">
+        <div className="flex justify-between items-center pb-10">
+          <h3 className="uppercase">BEst seller</h3>
+          <Button>view all</Button>
+        </div>
+        <div className="grid grid-cols-3 gap-7">
+          {
+            productslimited.map((items, i) => (
+              <ProductCardWithoutMark key={i} name={items.name}/>
+            ))
+          }
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="h-[100vh] relative image-container overflow-hidden">
+          <Image src="/cover1.jpg" alt="cover" fill className="object-cover h-full w-full -z-30 img" />
+          <div className="px-10 pt-10">
+            <h1 className="text-[4.5rem] font-bold">20% Off Kids Styles</h1>
+            <p className="text-[1.5rem] mt-16">Exclusive, one-time offer</p>
+            <Button className="bg-black mt-3 text-yellow-500 hover:bg-white hover:text-black border-2 border-black">Shop now</Button>
+          </div>
+        </div>
+        <div className="backdrop-blur-md bg-white/50 rounded-md w-[500px] h-[300px] text-center absolute bottom-1 right-14 p-3">
+          <div className="bg-white rounded-md relative w-full h-full flex justify-between gap-x-10">
+              <div className="relative h-full w-full">
+                <Image src="/p1.jpg" alt="shose" fill className="object-cover w-full h-full" />
+              </div>
+              <div className="pr-5 pt-5 text-left">
+                <h3 className="font-bold">MARATHON MASTER</h3>
+                <p className="h-[150px]">$140.00</p>
+                <Button className="hover:bg-black hover:text-yellow-500">Add to card</Button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white container py-20">
+        <h3 className="uppercase">CUSTOMER REVIEWS</h3>
+        <div className="ml-[470px] mt-10 flex items-center gap-5">
+          <ReviewCard/>
+          <ReviewCard/>
+        </div>
+      </div>
+
+    </main>
   );
 }

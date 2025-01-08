@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import Marquee from "@/components/Marquee";
+import { reviews } from "@/lib/utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Marquee words={reviews} className="text-[0.8rem] font-bold  text-yellow-500"/>
+        <Nav/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
