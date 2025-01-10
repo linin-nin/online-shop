@@ -1,28 +1,46 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button } from './ui/button'
+import MenuSideBar from './MenuSideBar'
+import { Divide } from 'lucide-react'
 
 const Nav = () => {
+  const [navbar, setNavbar] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setNavbar(false) // Close the menu when clicking outside
+    }
+  }
 
-  const [navbar, setNabar] = useState(false)
+  useEffect(() => {
+    if (navbar) {
+      document.body.style.overflow = "hidden"
+      document.addEventListener('mousedown', handleOutsideClick)
+    } else {
+      document.body.style.overflow = "auto"
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [navbar])
+
   return (
     <div className='bg-white container py-5 flex items-center justify-between'>
         {/* logo */}
         <div className='font-bold text-[1.5rem]'>
             Style.
         </div>
-        <nav className='flex items-center gap-7'>
+        <nav className='flex items-center gap-3'>
             <div className='border-2 rounded-full border-black p-2'>
                 <input type="text" placeholder='search'/>
             </div>
             <Button>Login</Button>
-            <Button onClick={() => setNabar(!navbar)}>Menu</Button>
+            <Button onClick={() => setNavbar(!navbar)}>Shop</Button>
         </nav>
-        {navbar && 
-        <div className='bg-red-500 absolute right-0 w-[500px]'>
-          <span className='cursor-pointer' onClick={() => setNabar(!navbar)}>close</span>
-          <h1>Hello Navbar</h1>
-        </div>}
     </div>
   )
 }

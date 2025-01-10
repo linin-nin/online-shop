@@ -22,5 +22,40 @@ export const highligh = [
   "New Energy, Same High Quality",
 ]
 
+export const products = [
+  {
+    name: "hello",
+    img: [
+      "/p1.jpg",
+      "/p12.jpg",
+    ],
+    price: "12.40"
+  },
+  {
+    name: "hello",
+    img: [
+      "/p1.jpg",
+      "/p12.jpg",
+    ],
+    price: "30.00"
+  },
+  {
+    name: "hello",
+    img: [
+      "/p1.jpg",
+      "/p12.jpg",
+    ],
+    price: "15.00"
+  },
+  {
+    name: "hello",
+    img: [
+      "/p1.jpg",
+      "/p12.jpg",
+    ],
+    price: "10.50"
+  },
+]
+
 
 

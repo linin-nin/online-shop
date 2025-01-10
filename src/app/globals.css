@@ -65,6 +65,17 @@
   }
 }
 
+.menu-slide-in {
+  animation: slideIn 0.3s ease-in-out forwards;
+}
 
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 
 

@@ -7,7 +7,7 @@ import { Fan, Flower} from "lucide-react"
 const MarqueeComponent = ({words, className, icon}:{words: string[], className?: string, icon?: boolean}) => {
   const firstRow = words.slice(0, words.length / 2);
   return (
-    <div className="">
+    <div className="z-[999]">
       <Marquee 
       reverse 
       pauseOnHover 
